@@ -1,31 +1,49 @@
 <template>
 	<div id="app">
-
-	<div>
 		<div id="world"></div>
-	</div>
+		<div class="input-group">
+			<span class="input-group-addon">identificador de Nodo</span>
+			<input v-model="form.id" type="text" class="form-input" placeholder="..." />
+			<button @click="addVertice(form.id)" class="btn btn-primary input-group-btn">Agregar</button>
+		</div>
+		<div class="input-group">
+			<span class="input-group-addon">Arista desde</span>
+			<input v-model="form.to" type="text" class="form-input" placeholder="..." />
+			<span class="input-group-addon">hasta</span>
+			<input v-model="form.from" type="text" class="form-input" placeholder="..." />
+			<button @click="addArista(form.to,form.from)" class="btn btn-primary input-group-btn">Relacionar</button>
+		</div>
 	</div>
 </template>
 
 <script>
 	import vis from 'vis';
 	import chroma from 'chroma-js';
-	import {g} from './Graphs.js'
-	window.g = g
+	import {Grafo} from './Graphs.js'
+	import EventBus from './bus.js';
+
 	export default {
 		data(){
 			return {
+				form: {
+					to: null,
+					from: null,
+					id: null,
+				},
 				nodes: null,
 				edges: null,
+				grafo: new Grafo()
 			}
 		},
 		components: {
 		},
 		methods: {
-			addNode (i) {
-				var vertice = g.agregarVertice(i);
-				console.warn(vertice)
-
+			addVertice (i) {
+				var vertice = this.grafo.addVertice(i);
+				this.addNode(vertice)
+				return vertice
+			},
+			addNode (vertice) {
 				var nodeWord = this.nodes.get(vertice.id)
 
 				if ( !nodeWord ){
@@ -40,10 +58,22 @@
 							size:size,
 						})
 				}
+				return nodeWord
 			},
 			addEdge (to, from) {
-				this.edges.add({to:to, from:from})
-				g.agregarArista(to, from, 5);
+				return this.edges.add({to:to, from:from})
+			},
+			addArista (to, from) {
+				var arista = this.grafo.addArista(to, from, 5);
+				console.log(arista)
+				arista.news.forEach(vertice => {
+					this.addNode(vertice)
+				});
+
+				this.addEdge(to, from)
+
+
+				return arista
 			},
 			draw(){
 				var arrayNodes = []
@@ -65,55 +95,10 @@
 				var network = new vis.Network(container, data, options);
 				window.network = network
 
-
-				var scale = chroma.scale(["yellow","orange"])
-				var colorsWords = scale.colors(100)
-
-				let items = [{id: 1, text:'hola'},{id: 2, text:'mundo'}]
-				let rels = [{to: 1, from: 2}]
-
-
 				for ( var x in [1, 2, 3, 4, 5] ){
-					this.addNode(x)
+					var vertice = this.addVertice(x)
 				}
 
-				for ( var x in g.listaVertices ){
-					var vertice = g.listaVertices[x]
-					vertice.text = vertice.id
-					// console.log(vertice.obtenerConexiones())
-					vertice.obtenerConexiones().forEach(from => {
-						// console.log(from)
-						// edges.add({to:vertice.id, from:from})
-						this.addEdge(vertice.id, from)
-					});
-
-
-				}
-				/*
-				items.forEach((item) => {
-					var nodeWord = nodes.get(item.text)
-
-					if ( !nodeWord ){
-							var size = 25
-							var index = Math.floor((Math.random() * 100) + 1);
-							var color = colorsWords[index]
-							if ( this.wg == item.text ){
-								size = 30
-								color = "green"
-							}
-							nodes.add({
-								id:item.id,
-								label:item.text,
-								shape:'circle',
-								color:color,
-								size:size,
-							})
-					}
-				})
-				rels.forEach((item) => {
-					edges.add({to:item.to, from:item.from})
-				})
-				*/
 			},
 		},
 		mounted(){
@@ -123,10 +108,12 @@
 </script>
 
 <style>
-	#world {
-		width: 100%;
-		height: 400px;
-		border: 1px solid lightgray;
-	}
-
+#world {
+	width: 100%;
+	height: 400px;
+	border: 1px solid lightgray;
+}
+@import '~spectre.css/dist/spectre-exp.min.css';
+@import '~spectre.css/dist/spectre-icons.min.css';
+@import '~spectre.css/dist/spectre.min.css';
 </style>

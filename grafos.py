@@ -4,16 +4,16 @@ class Vertice:
         self.text = clave;
         self.conectadoA = {}
 
-    def agregarVecino(self,vecino,ponderacion=0):
+    def addNeighbor(self,vecino,ponderacion=0):
         self.conectadoA[vecino] = ponderacion
 
     def __str__(self):
         return str(self.id) + ' conectadoA: ' + str([x.id for x in self.conectadoA])
 
-    def obtenerConexiones(self):
+    def getConnections(self):
         return self.conectadoA.keys()
 
-    def obtenerId(self):
+    def getId(self):
         return self.id
 
     def obtenerPonderacion(self,vecino):
@@ -22,55 +22,55 @@ class Vertice:
 
 class Grafo:
     def __init__(self):
-        self.listaVertices = {}
-        self.numVertices = 0
+        self.listVertices = {}
+        self.countVertices = 0
 
-    def agregarVertice(self,clave):
-        self.numVertices = self.numVertices + 1
+    def addVertice(self,clave):
+        self.countVertices = self.countVertices + 1
         nuevoVertice = Vertice(clave)
-        self.listaVertices[clave] = nuevoVertice
+        self.listVertices[clave] = nuevoVertice
         return nuevoVertice
 
-    def obtenerVertice(self,n):
-        if n in self.listaVertices:
-            return self.listaVertices[n]
+    def getVertice(self,n):
+        if n in self.listVertices:
+            return self.listVertices[n]
         else:
             return None
 
     def __contains__(self,n):
-        return n in self.listaVertices
+        return n in self.listVertices
 
-    def agregarArista(self,de,a,costo=0):
-        if de not in self.listaVertices:
-            nv = self.agregarVertice(de)
-        if a not in self.listaVertices:
-            nv = self.agregarVertice(a)
-        self.listaVertices[de].agregarVecino(self.listaVertices[a], costo)
+    def addArista(self,de,a,costo=0):
+        if de not in self.listVertices:
+            nv = self.addVertice(de)
+        if a not in self.listVertices:
+            nv = self.addVertice(a)
+        self.listVertices[de].addNeighbor(self.listVertices[a], costo)
 
-    def obtenerVertices(self):
-        return self.listaVertices.keys()
+    def getVertices(self):
+        return self.listVertices.keys()
 
     def __iter__(self):
-        return iter(self.listaVertices.values())
+        return iter(self.listVertices.values())
 
 
 
 g = Grafo()
 for i in range(6):
-    g.agregarVertice(i)
+    g.addVertice(i)
 
-g.listaVertices
-g.agregarArista(0,1,5)
-g.agregarArista(0,5,2)
-g.agregarArista(1,2,4)
-g.agregarArista(2,3,9)
-g.agregarArista(3,4,7)
-g.agregarArista(3,5,3)
-g.agregarArista(4,0,1)
-g.agregarArista(5,4,8)
-g.agregarArista(5,2,1)
+g.listVertices
+g.addArista(0,1,5)
+g.addArista(0,5,2)
+g.addArista(1,2,4)
+g.addArista(2,3,9)
+g.addArista(3,4,7)
+g.addArista(3,5,3)
+g.addArista(4,0,1)
+g.addArista(5,4,8)
+g.addArista(5,2,1)
 
 for v in g:
-    for w in v.obtenerConexiones():
+    for w in v.getConnections():
         print (w)
-        print("( %s , %s )" % (v.obtenerId(), w.obtenerId()))
+        print("( %s , %s )" % (v.getId(), w.getId()))

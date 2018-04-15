@@ -1,19 +1,19 @@
-class Vertice{
+class Vertice {
   constructor(clave) {
     this.id = clave;
     this.text = clave;
     this.conectadoA = {};
   }
 
-  agregarVecino(vecino, ponderacion = 0) {
+  addNeighbor(vecino, ponderacion = 0) {
     this.conectadoA[vecino.id] = ponderacion;
   }
 
-  obtenerConexiones() {
+  getConnections() {
     return Object.keys(this.conectadoA);
   }
 
-  obtenerId() {
+  getId() {
     return this.id;
   }
 
@@ -23,68 +23,57 @@ class Vertice{
 }
 
 
-class Grafo{
-
+class Grafo {
   constructor() {
-    this.listaVertices = {};
-    this.numVertices = 0;
+    this.listVertices = {};
+    this.countVertices = 0;
   }
 
-  agregarVertice(clave) {
+  addVertice(clave) {
+    // alert("hola")
+    this.countVertices = this.countVertices + 1;
+    const nuevoVertice = new Vertice(clave);
+    this.listVertices[clave] = nuevoVertice;
 
-    this.numVertices = this.numVertices + 1;
-    let nuevoVertice = new Vertice(clave);
-    this.listaVertices[clave] = nuevoVertice;
+
     return nuevoVertice;
   }
 
-  obtenerVertice(n) {
-
-    if (n in this.listaVertices) {
-      return this.listaVertices[n]
-    }else{
-      return None
+  getVertice(n) {
+    if (n in this.listVertices) {
+      return this.listVertices[n];
     }
+    return null;
   }
 
   __contains__(n) {
-    return n in this.listaVertices;
+    return n in this.listVertices;
   }
 
-  agregarArista(de, a, costo = 0) {
-
-    if (!(de in this.listaVertices)) {
+  addArista(de, a, costo = 0) {
+    const n = [];
+    if (!(de in this.listVertices)) {
       // nv =
-      this.agregarVertice(de);
+      n.push(this.addVertice(de));
     }
-    if (!(a in this.listaVertices)) {
+    if (!(a in this.listVertices)) {
       // nv =
-      this.agregarVertice(a);
+      n.push(this.addVertice(a));
     }
-    this.listaVertices[de].agregarVecino(this.listaVertices[a], costo);
+    this.listVertices[de].addNeighbor(this.listVertices[a], costo);
+    return {
+      news: n,
+    };
   }
 
-  obtenerVertices() {
-    return Object.keys(this.listaVertices);
+  getVertices() {
+    return Object.keys(this.listVertices);
   }
 
 }
 
-
-const g = new Grafo();
-for( const i in [1, 2, 3, 4, 5, 6]) {
-  g.agregarVertice(i);
-}
-
-console.log(g.listaVertices);
-
-g.agregarArista(0, 1, 5);
-g.agregarArista(1, 2, 2);
-g.agregarArista(2, 3, 4);
-g.agregarArista(3, 4, 9);
-g.agregarArista(4, 5, 7);
-g.agregarArista(5, 0, 3);
 
 export {
-  g,
+  Vertice,
+  Grafo,
 };
