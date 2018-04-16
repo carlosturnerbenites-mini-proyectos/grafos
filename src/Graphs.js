@@ -1,24 +1,27 @@
+import { sleep, diagram} from './utils';
 class Vertice {
-  constructor(clave) {
-    this.id = clave;
-    this.text = clave;
-    this.conectadoA = {};
+  constructor(id) {
+    this.id = id;
+    this.text = id;
+    this.connectTo = {};
+    sleep(1000)
+    diagram.setCurrent('vertice_constructor')
   }
 
-  addNeighbor(vecino, ponderacion = 0) {
-    this.conectadoA[vecino.id] = ponderacion;
+  addNeighbor(neighbor, weighing = 0) {
+    this.connectTo[neighbor.id] = weighing;
   }
 
   getConnections() {
-    return Object.keys(this.conectadoA);
+    return Object.keys(this.connectTo);
   }
 
   getId() {
     return this.id;
   }
 
-  obtenerPonderacion(vecino) {
-    return this.conectadoA[vecino];
+  obtenerPonderacion(neighbor) {
+    return this.connectTo[neighbor];
   }
 }
 
@@ -29,14 +32,12 @@ class Grafo {
     this.countVertices = 0;
   }
 
-  addVertice(clave) {
-    // alert("hola")
+  addVertice(id) {
     this.countVertices = this.countVertices + 1;
-    const nuevoVertice = new Vertice(clave);
-    this.listVertices[clave] = nuevoVertice;
+    const newVertice = new Vertice(id);
+    this.listVertices[id] = newVertice;
 
-
-    return nuevoVertice;
+    return newVertice;
   }
 
   getVertice(n) {
@@ -46,21 +47,15 @@ class Grafo {
     return null;
   }
 
-  __contains__(n) {
-    return n in this.listVertices;
-  }
-
-  addArista(de, a, costo = 0) {
+  addArista(de, a, cost = 0) {
     const n = [];
     if (!(de in this.listVertices)) {
-      // nv =
       n.push(this.addVertice(de));
     }
     if (!(a in this.listVertices)) {
-      // nv =
       n.push(this.addVertice(a));
     }
-    this.listVertices[de].addNeighbor(this.listVertices[a], costo);
+    this.listVertices[de].addNeighbor(this.listVertices[a], cost);
     return {
       news: n,
     };
@@ -69,9 +64,7 @@ class Grafo {
   getVertices() {
     return Object.keys(this.listVertices);
   }
-
 }
-
 
 export {
   Vertice,

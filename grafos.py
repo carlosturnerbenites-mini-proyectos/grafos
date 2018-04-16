@@ -1,23 +1,23 @@
 class Vertice:
-    def __init__(self,clave):
-        self.id = clave
-        self.text = clave;
-        self.conectadoA = {}
+    def __init__(self,id):
+        self.id = id
+        self.text = id;
+        self.connectTo = {}
 
-    def addNeighbor(self,vecino,ponderacion=0):
-        self.conectadoA[vecino] = ponderacion
+    def addNeighbor(self,neighbor,weighing=0):
+        self.connectTo[neighbor] = weighing
 
     def __str__(self):
-        return str(self.id) + ' conectadoA: ' + str([x.id for x in self.conectadoA])
+        return str(self.id) + ' connectTo: ' + str([x.id for x in self.connectTo])
 
     def getConnections(self):
-        return self.conectadoA.keys()
+        return self.connectTo.keys()
 
     def getId(self):
         return self.id
 
-    def obtenerPonderacion(self,vecino):
-        return self.conectadoA[vecino]
+    def obtenerPonderacion(self,neighbor):
+        return self.connectTo[neighbor]
 
 
 class Grafo:
@@ -25,11 +25,11 @@ class Grafo:
         self.listVertices = {}
         self.countVertices = 0
 
-    def addVertice(self,clave):
+    def addVertice(self,id):
         self.countVertices = self.countVertices + 1
-        nuevoVertice = Vertice(clave)
-        self.listVertices[clave] = nuevoVertice
-        return nuevoVertice
+        newVertice = Vertice(id)
+        self.listVertices[id] = newVertice
+        return newVertice
 
     def getVertice(self,n):
         if n in self.listVertices:
@@ -40,12 +40,12 @@ class Grafo:
     def __contains__(self,n):
         return n in self.listVertices
 
-    def addArista(self,de,a,costo=0):
+    def addArista(self,de,a,cost=0):
         if de not in self.listVertices:
             nv = self.addVertice(de)
         if a not in self.listVertices:
             nv = self.addVertice(a)
-        self.listVertices[de].addNeighbor(self.listVertices[a], costo)
+        self.listVertices[de].addNeighbor(self.listVertices[a], cost)
 
     def getVertices(self):
         return self.listVertices.keys()
