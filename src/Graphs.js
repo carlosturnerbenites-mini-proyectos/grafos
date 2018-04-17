@@ -1,25 +1,12 @@
-import { sleep, diagram} from './utils';
 class Vertice {
   constructor(id) {
     this.id = id;
     this.text = id;
     this.connectTo = {};
-
-    console.log(window.appVue)
-    if ( window.appVue && window.appVue.$refs.app.debug ){
-      diagram.setCurrent('Vertice__constructor');
-      sleep();
-    }
   }
 
   addNeighbor(neighbor, weighing = 0) {
     this.connectTo[neighbor.id] = weighing;
-
-    console.log(window.appVue)
-    if ( window.appVue && window.appVue.$refs.app.debug ){
-      diagram.setCurrent('Vertice__addNeighbor');
-      sleep();
-    }
   }
 
   getConnections() {
@@ -40,12 +27,6 @@ class Grafo {
   constructor() {
     this.listVertices = {};
     this.countVertices = 0;
-
-    console.log(window.appVue)
-    if ( window.appVue && window.appVue.$refs.app.debug ){
-      diagram.setCurrent('Grafo__constructor');
-      sleep();
-    }
   }
 
   addVertice(id) {
@@ -53,11 +34,6 @@ class Grafo {
     const newVertice = new Vertice(id);
     this.listVertices[id] = newVertice;
 
-    console.log(window.appVue)
-    if ( window.appVue && window.appVue.$refs.app.debug ){
-      diagram.setCurrent('Grafo__addVertice');
-      sleep();
-    }
 
     return newVertice;
   }
@@ -78,12 +54,6 @@ class Grafo {
       n.push(this.addVertice(a));
     }
     this.listVertices[de].addNeighbor(this.listVertices[a], cost);
-
-    console.log(window.appVue)
-    if ( window.appVue && window.appVue.$refs.app.debug ){
-      diagram.setCurrent('Grafo__addArista');
-      sleep();
-    }
 
     return {
       news: n,

@@ -13,10 +13,6 @@
 			<input v-model="form.from" type="text" class="form-input" placeholder="..." />
 			<button @click="addArista(form.to,form.from)" class="btn btn-primary input-group-btn">Relacionar</button>
 		</div>
-		<div id="diagram">Diagram will be placed here</div>
-
-		<input type="checkbox" id="debug" checked="false" v-model="debug">
-
 	</div>
 </template>
 
@@ -24,10 +20,9 @@
 	import vis from 'vis';
 
 	import {Grafo} from './Graphs.js'
-	import {diagram} from './utils.js'
-	window.diagram = diagram
+
 	export default {
-		data(){
+		data() {
 			return {
 				debug: false,
 				form: {
@@ -37,7 +32,7 @@
 				},
 				nodes: null,
 				edges: null,
-				grafo: new Grafo()
+				grafo: new Grafo(),
 			}
 		},
 		components: {
@@ -78,7 +73,7 @@
 
 				return arista
 			},
-			draw(){
+			draw() {
 				var arrayNodes = []
 				var arrayEdges = []
 				var nodes = new vis.DataSet(arrayNodes);
@@ -103,14 +98,9 @@
 				}
 
 			},
-			drawDiagram(){
-				diagram.draw()
-
-			}
 		},
-		mounted(){
+		mounted() {
 			this.draw()
-			this.drawDiagram()
 		}
 	};
 </script>
