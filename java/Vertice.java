@@ -5,7 +5,7 @@ public class Vertice{
     public int text;
     public HashMap<Integer, Integer> connectTo = new HashMap<Integer, Integer>();
 
-    public void Vertice(int id){
+    public Vertice(int id){
         this.id = id;
         this.text = text;
     }
@@ -14,10 +14,12 @@ public class Vertice{
         this.connectTo.put(neighbor,weighing);
     }
 
-    public Set getConnections(){
-       Set keys = this.connectTo.keySet();
+    public HashMap getConnections(){
+       // Set keys = this.connectTo.keySet();
+       // return keys;
 
-        return keys;
+
+        return this.connectTo;
     }
 
     public int getId(){
