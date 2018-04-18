@@ -17,25 +17,11 @@ public class GenGrafo{
         g.addArista(5,2,1);
 
 
-        // g.listVertices.forEach((k, v) -> System.out.println("key: " + k + " value:" + v));
-
-        // g.listVertices.forEach((key, vertice) -> System.out.println("key: " + key + " value:" + vertice) );
         g.listVertices.forEach((key, vertice) -> {
             System.out.println("vertice: " + vertice.getId());
             vertice.getConnections().forEach((key2, vecino) -> {
-                System.out.println("to: " + vertice.getId() + " from:" + vecino);
+                System.out.println("to: " + vertice.getId() + " from:" + g.listVertices.get(key2).getId());
             });
         });
-
-
-
-
-
-        /*
-        for v in g:
-            for w in v.getConnections():
-                print (w)
-                print("( %s , %s )" % (v.getId(), w.getId()))
-        */
     }
 }
