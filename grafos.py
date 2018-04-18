@@ -16,8 +16,6 @@ class Vertice:
     def getId(self):
         return self.id
 
-    def obtenerPonderacion(self,neighbor):
-        return self.connectTo[neighbor]
 
 
 class Grafo:
@@ -40,12 +38,12 @@ class Grafo:
     def __contains__(self,n):
         return n in self.listVertices
 
-    def addArista(self,de,a,cost=0):
-        if de not in self.listVertices:
-            nv = self.addVertice(de)
-        if a not in self.listVertices:
-            nv = self.addVertice(a)
-        self.listVertices[de].addNeighbor(self.listVertices[a], cost)
+    def addArista(self,fromVerticeId,toVerticeId,cost=0):
+        if fromVerticeId not in self.listVertices:
+            newVertice = self.addVertice(fromVerticeId)
+        if toVerticeId not in self.listVertices:
+            newVertice = self.addVertice(toVerticeId)
+        self.listVertices[fromVerticeId].addNeighbor(self.listVertices[toVerticeId], cost)
 
     def getVertices(self):
         return self.listVertices.keys()

@@ -2,7 +2,7 @@
 	<div id="app">
 		<div id="world"></div>
 		<div class="input-group">
-			<span class="input-group-addon">identificador de Nodo</span>
+			<span class="input-group-addon">identificador fromVerticeId Nodo</span>
 			<input v-model="form.id" type="text" class="form-input" placeholder="..." />
 			<button @click="addVertice(form.id)" class="btn btn-primary input-group-btn">Agregar</button>
 		</div>

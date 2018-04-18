@@ -17,9 +17,6 @@ class Vertice {
     return this.id;
   }
 
-  obtenerPonderacion(neighbor) {
-    return this.connectTo[neighbor];
-  }
 }
 
 
@@ -45,15 +42,15 @@ class Grafo {
     return null;
   }
 
-  addArista(de, a, cost = 0) {
+  addArista(fromVerticeId, toVerticeId, cost = 0) {
     const n = [];
-    if (!(de in this.listVertices)) {
-      n.push(this.addVertice(de));
+    if (!(fromVerticeId in this.listVertices)) {
+      n.push(this.addVertice(fromVerticeId));
     }
-    if (!(a in this.listVertices)) {
-      n.push(this.addVertice(a));
+    if (!(toVerticeId in this.listVertices)) {
+      n.push(this.addVertice(toVerticeId));
     }
-    this.listVertices[de].addNeighbor(this.listVertices[a], cost);
+    this.listVertices[fromVerticeId].addNeighbor(this.listVertices[toVerticeId], cost);
 
     return {
       news: n,
