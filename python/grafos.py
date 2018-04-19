@@ -1,3 +1,5 @@
+from todo.monitor import Monitor
+
 class Vertice:
     def __init__(self,id):
         self.id = id
@@ -53,11 +55,14 @@ class Grafo:
 
 
 
+m = Monitor()
+
+m.start()
+
 g = Grafo()
 for i in range(6):
     g.addVertice(i)
 
-g.listVertices
 g.addArista(0,1,5)
 g.addArista(0,5,2)
 g.addArista(1,2,4)
@@ -68,7 +73,9 @@ g.addArista(4,0,1)
 g.addArista(5,4,8)
 g.addArista(5,2,1)
 
+m.stop()
+
 for v in g:
+    print (v)
     for w in v.getConnections():
-        print (w)
         print("( %s , %s )" % (v.getId(), w.getId()))
