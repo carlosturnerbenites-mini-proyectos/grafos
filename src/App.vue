@@ -2,7 +2,7 @@
 	<div id="app">
 		<div id="world"></div>
 		<div class="input-group">
-			<span class="input-group-addon">identificador fromVerticeId Nodo</span>
+			<span class="input-group-addon">Nodo</span>
 			<input v-model="form.id" type="text" class="form-input" placeholder="..." />
 			<button @click="addVertice(form.id)" class="btn btn-primary input-group-btn">Agregar</button>
 		</div>
@@ -11,6 +11,12 @@
 			<input v-model="form.to" type="text" class="form-input" placeholder="..." />
 			<span class="input-group-addon">hasta</span>
 			<input v-model="form.from" type="text" class="form-input" placeholder="..." />
+			<span class="input-group-addon">
+				<label for="dir">
+					<input type="checkbox" v-model="dir" id="dir">
+					Dirigido?
+				</label>
+			</span>
 			<button @click="addArista(form.to,form.from)" class="btn btn-primary input-group-btn">Relacionar</button>
 		</div>
 	</div>
@@ -24,7 +30,7 @@
 	export default {
 		data() {
 			return {
-				debug: false,
+				dir: false,
 				form: {
 					to: null,
 					from: null,
@@ -61,7 +67,8 @@
 				return nodeWord
 			},
 			addEdge (to, from) {
-				return this.edges.add({to:to, from:from, color: 'red', arrows: 'from'})
+				const arrows = this.dir ? 'from' : ''
+				return this.edges.add({to:to, from:from, color: 'red', arrows})
 			},
 			addArista (to, from) {
 				var arista = this.grafo.addArista(to, from, 5);
